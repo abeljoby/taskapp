@@ -26,9 +26,21 @@ export default function TaskSheet() {
         </SheetDescription>
         </SheetHeader>
         <form
-        onSubmit={(event) => {
-            wait().then(() => setOpen(false));
+        onSubmit={async (event) => {
             event.preventDefault();
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            await fetch("http://localhost:8080/tasks/v1/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+            });
+
+            wait().then(() => setOpen(false));
         }}
         className="space-y-4"
         >
@@ -82,9 +94,9 @@ export default function TaskSheet() {
             className="w-full border rounded px-2 py-1"
             required
             >
-            <option value="1">High</option>
-            <option value="2">Medium</option>
-            <option value="3">Low</option>
+            <option value={1}>High</option>
+            <option value={2}>Medium</option>
+            <option value={3}>Low</option>
             </select>
         </div>
         <div>

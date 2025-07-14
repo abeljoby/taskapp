@@ -1,6 +1,9 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 export type Task = {
   id: string
@@ -24,10 +27,28 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "priority",
     header: "Priority",
+    cell: ({ row }) => {
+      const prio = row.getValue("priority") as 1 | 2 | 3
+      const prioName: Record<1 | 2 | 3, string> = {1:"High",2:"Medium",3:"Low"}
+      const formatted = prioName[prio]
+ 
+      return <div>{formatted}</div>
+    },
   },
   {
     accessorKey: "due_date",
     header: "Due Date",
+    // header: ({ column }) => {
+    //   return (
+    //     <Button
+    //       variant="ghost"
+    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //     >
+    //       Due Date
+    //       <ArrowUpDown className="ml-2 h-4 w-4" />
+    //     </Button>
+    //   )
+    // },
   },
   {
     accessorKey: "status",
@@ -36,6 +57,34 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "category",
     header: "Category",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const task = row.original
+ 
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            {/* <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
+              Copy payment ID
+            </DropdownMenuItem> */}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Update task</DropdownMenuItem>
+            <DropdownMenuItem>Delete task</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
   },
 ]
 
