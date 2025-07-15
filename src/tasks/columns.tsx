@@ -32,6 +32,14 @@ export const columns= ({
     header: "Description",
   },
   {
+    accessorKey: "due_date",
+    header: "Due Date",
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+  },
+  {
     accessorKey: "priority",
     header: ({ column }) => {
       return (
@@ -46,28 +54,48 @@ export const columns= ({
     },
     cell: ({ row }) => {
       const prio = row.getValue("priority") as 1 | 2 | 3
-      const prioName: Record<1 | 2 | 3, string> = {1:"High",2:"Medium",3:"Low"}
-      const formatted = prioName[prio]
- 
-      return <div>{formatted}</div>
+      const prioMap: Record<1 | 2 | 3, { label: string; icon: JSX.Element }> = {
+      1: {
+        label: "High",
+        icon: (
+        <span className="mr-2 text-red-600">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
+          </svg>
+        </span>
+        ),
+      },
+      2: {
+        label: "Medium",
+        icon: (
+        <span className="mr-2 text-yellow-500">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
+          </svg>
+        </span>
+        ),
+      },
+      3: {
+        label: "Low",
+        icon: (
+        <span className="mr-2 text-green-600">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
+          </svg>
+        </span>
+        ),
+      },
+      }
+      const { label, icon } = prioMap[prio]
+      return (
+      <div className="flex items-center">
+        {icon}
+        {label}
+      </div>
+      )
     },
-  },
-  {
-    accessorKey: "due_date",
-    header: "Due Date",
-    // header: ({ column }) => {
-    //   return (
-    //     <Button
-    //       variant="ghost"
-    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //     >
-    //       Due Date
-    //       <ArrowUpDown className="ml-2 h-4 w-4" />
-    //     </Button>
-    //   )
-    // },
-  },
-  {
+    },
+    {
     accessorKey: "status",
     header: ({ column }) => {
       return (
@@ -106,10 +134,6 @@ export const columns= ({
     },
   },
   {
-    accessorKey: "category",
-    header: "Category",
-  },
-  {
     id: "actions",
     cell: ({ row }) => {
       const task = row.original
@@ -123,8 +147,8 @@ export const columns= ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator /> */}
             <DropdownMenuItem onClick={() => onUpdate(task)}>Update task</DropdownMenuItem>
             <DropdownMenuItem onClick={() => onDelete(task.id)}>Delete task</DropdownMenuItem>
           </DropdownMenuContent>

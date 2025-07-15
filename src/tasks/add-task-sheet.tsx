@@ -21,7 +21,13 @@ export default function TaskSheet({ onFormSubmit }: TaskSheetProps) {
   const [open, setOpen] = React.useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-    <SheetTrigger><ClipboardPlus /></SheetTrigger>
+    <SheetTrigger
+      className="fixed top-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2 shadow-lg transition-colors duration-200"
+      style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
+      aria-label="Add Task"
+    >
+      <ClipboardPlus className="w-6 h-6" />
+    </SheetTrigger>
     <SheetContent>
         <SheetHeader>
         <SheetTitle>Add a new task</SheetTitle>
@@ -39,14 +45,14 @@ export default function TaskSheet({ onFormSubmit }: TaskSheetProps) {
             await fetch("http://localhost:8080/tasks/v1/", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+            "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
             });
             onFormSubmit();
             wait().then(() => setOpen(false));
         }}
-        className="space-y-4"
+        className="space-y-4 px-4"
         >
         <div>
             <label className="block text-sm font-medium mb-1" htmlFor="title">
@@ -122,6 +128,7 @@ export default function TaskSheet({ onFormSubmit }: TaskSheetProps) {
             id="category"
             name="category"
             type="text"
+            defaultValue={"Unassigned"}
             className="w-full border rounded px-2 py-1"
             />
         </div>

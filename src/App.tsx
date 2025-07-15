@@ -10,8 +10,8 @@ function App() {
     <>
       <SidebarProvider>
         <AppSidebar />
+        <SidebarTrigger />
         <main>
-          <SidebarTrigger />
           <TaskPage />
         </main>
       </SidebarProvider>

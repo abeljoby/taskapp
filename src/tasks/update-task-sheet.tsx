@@ -56,7 +56,7 @@ export default function UpdateTask({ task, onFormSubmit, onClose }: UpdateTaskPr
             onFormSubmit();
             wait().then(() => setOpen(false));
           }}
-          className="space-y-4"
+          className="space-y-4 px-4"
         >
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="title">

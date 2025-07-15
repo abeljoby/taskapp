@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, SquareCheckBig } from "lucide-react"
 
 import {
   Sidebar,
@@ -12,6 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 const items = [
@@ -44,8 +45,11 @@ const categories = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>
-        <b>Welcome, Abel</b>
+      <SidebarHeader className="flex flex-row items-center text-2xl font-extrabold tracking-tight gap-2 mt-1 ml-1">
+        <SquareCheckBig className="w-7 h-7 text-primary" />
+        <span className="font-logo text-primary">
+          TaskApp
+        </span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
