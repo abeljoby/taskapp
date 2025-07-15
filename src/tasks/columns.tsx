@@ -15,7 +15,13 @@ export type Task = {
   category?: string
 }
 
-export const columns: ColumnDef<Task>[] = [
+export const columns= ({
+  onDelete,
+  onUpdate,
+}: {
+  onDelete: (id: string) => void
+  onUpdate: (task: Task) => void
+}): ColumnDef<Task>[] => [
   {
     accessorKey: "title",
     header: "Title",
@@ -73,14 +79,9 @@ export const columns: ColumnDef<Task>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Update task</DropdownMenuItem>
-            <DropdownMenuItem>Delete task</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onUpdate(task)}>Update task</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onDelete(task.id)}>Delete task</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

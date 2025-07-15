@@ -9,11 +9,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { ClipboardPlus } from "lucide-react"
+import { ClipboardPlus, Proportions } from "lucide-react"
 
 const wait = () => new Promise((resolve) => setTimeout(resolve, 200));
 
-export default function TaskSheet() {
+type TaskSheetProps = {
+  onFormSubmit: () => void;
+};
+
+export default function TaskSheet({ onFormSubmit }: TaskSheetProps) {
   const [open, setOpen] = React.useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -39,7 +43,7 @@ export default function TaskSheet() {
             },
             body: JSON.stringify(data),
             });
-
+            onFormSubmit();
             wait().then(() => setOpen(false));
         }}
         className="space-y-4"
