@@ -11,7 +11,7 @@ A lightweight Task Manager application that allows users to add tasks, set deadl
 
 ## Tech Stack
 
-- **Frontend:** React
+- **Frontend:** React, Shadcn UI Component Library
 - **Backend:** Spring Boot
 - **Database:** PostgreSQL
 

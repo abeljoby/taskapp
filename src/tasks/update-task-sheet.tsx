@@ -131,13 +131,18 @@ export default function UpdateTask({ task, onFormSubmit, onClose }: UpdateTaskPr
             <label className="block text-sm font-medium mb-1" htmlFor="category">
               Category
             </label>
-            <input
+            <select
               id="category"
               name="category"
-              type="text"
+              defaultValue={task.category || "Unassigned"}
               className="w-full border rounded px-2 py-1"
-              defaultValue={task.category || ""}
-            />
+              required
+            >
+              <option value="Unassigned">Unassigned</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="College">College</option>
+            </select>
           </div>
           <button type="submit" className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
             Save

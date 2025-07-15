@@ -2,17 +2,19 @@ import './App.css'
 import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar'
 import { AppSidebar } from './components/app-sidebar'
 import TaskPage from './tasks/page'
+import { useState } from 'react'
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
 
   return (
     <>
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar selectCategory={setCategoryFilter} selectStatus={setStatusFilter} />
         <SidebarTrigger />
         <main>
-          <TaskPage />
+          <TaskPage category={categoryFilter} status={statusFilter}/>
         </main>
       </SidebarProvider>
     </>

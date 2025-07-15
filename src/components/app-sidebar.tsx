@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings, SquareCheckBig } from "lucide-react"
+import { Calendar, CheckCircle, Clock, Home, Inbox, Loader, Search, Settings, SquareCheckBig } from "lucide-react"
 
 import {
   Sidebar,
@@ -17,9 +17,28 @@ import {
 
 const items = [
   {
-    title: "Tasks",
+    title: "All Tasks",
     url: "#",
-    icon: Home,
+    icon: Home, // general list or task icon
+    status: ""
+  },
+  {
+    title: "Pending",
+    url: "#",
+    icon: Clock, // implies waiting
+    status: "pending"
+  },
+  {
+    title: "In Progress",
+    url: "#",
+    icon: Loader, // a spinner-like icon for ongoing work
+    status: "in_progress"
+  },
+  {
+    title: "Completed",
+    url: "#",
+    icon: CheckCircle, // indicates completion
+    status: "completed"
   },
 ]
 
@@ -41,8 +60,16 @@ const categories = [
     url: "#",
   },
 ]
+
+type SidebarProps = {
+  selectStatus: (status: string) => void;
+  selectCategory: (category: string) => void;
+};
  
-export function AppSidebar() {
+export function AppSidebar({
+  selectStatus,
+  selectCategory,
+}: SidebarProps) {
   return (
     <Sidebar>
       <SidebarHeader className="flex flex-row items-center text-2xl font-extrabold tracking-tight gap-2 mt-1 ml-1">
@@ -58,7 +85,10 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild onClick={() => {
+                    selectCategory("");
+                    selectStatus(item.status)
+                  }}>
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -75,7 +105,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {categories.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild onClick={() => selectCategory(item.title)}>
                     <a href={item.url}>
                       {/* <item.icon /> */}
                       <span>{item.title}</span>

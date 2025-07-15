@@ -120,18 +120,23 @@ export default function TaskSheet({ onFormSubmit }: TaskSheetProps) {
             className="w-full border rounded px-2 py-1"
             />
         </div>
-        <div>
+          <div>
             <label className="block text-sm font-medium mb-1" htmlFor="category">
-            Category
+              Category
             </label>
-            <input
-            id="category"
-            name="category"
-            type="text"
-            defaultValue={"Unassigned"}
-            className="w-full border rounded px-2 py-1"
-            />
-        </div>
+            <select
+              id="category"
+              name="category"
+              defaultValue={"Unassigned"}
+              className="w-full border rounded px-2 py-1"
+              required
+            >
+              <option value="Unassigned">Unassigned</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="College">College</option>
+            </select>
+          </div>
         <button type="submit" className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">
             Submit
         </button>

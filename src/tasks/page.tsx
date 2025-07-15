@@ -10,7 +10,12 @@ async function getData(): Promise<Task[]> {
   return response.json()
 }
 
-export default function TaskPage() {
+type TaskProps = {
+  status: string
+  category: string
+};
+
+export default function TaskPage({ status, category }: TaskProps) {
   const [data, setData] = useState<Task[]>([])
   const [editTask, setEditTask] = useState<Task | null>(null)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -40,12 +45,14 @@ export default function TaskPage() {
   }
 
   return (
-    <div className="container mx-auto py-15 px-10">
+    <div className="container mx-auto py-15 px-5">
       <TaskSheet onFormSubmit={fetchData} />
       {showUpdate && editTask && (
         <UpdateTask task={editTask} onFormSubmit={handleUpdateClose} onClose={handleUpdateClose} />
       )}
       <DataTable
+        status={status}
+        category={category}
         columns={getColumns({ onDelete: handleDelete, onUpdate: handleUpdate })}
         data={data}
       />
