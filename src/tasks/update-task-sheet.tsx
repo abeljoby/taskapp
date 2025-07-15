@@ -124,7 +124,7 @@ export default function UpdateTask({ task, onFormSubmit, onClose }: UpdateTaskPr
               name="dueDate"
               type="date"
               className="w-full border rounded px-2 py-1"
-              defaultValue={task.due_date || ""}
+              defaultValue={task.dueDate || ""}
             />
           </div>
           <div>

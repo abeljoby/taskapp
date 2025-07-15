@@ -1,10 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { JSX } from "react"
+import { formatDistanceToNow, isToday, isTomorrow, isYesterday, parseISO } from 'date-fns'
 
 export type Task = {
   id: string
@@ -12,7 +13,7 @@ export type Task = {
   description?: string
   status: "pending" | "in_progress" | "completed"
   priority: 1 | 2 | 3 // 1: High, 2: Medium, 3: Low
-  due_date?: string // ISO date format, e.g. "2025-07-15"
+  dueDate?: string // ISO date format, e.g. "2025-07-15"
   category?: string
 }
 
@@ -32,8 +33,36 @@ export const columns= ({
     header: "Description",
   },
   {
-    accessorKey: "due_date",
-    header: "Due Date",
+    accessorKey: "dueDate",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Due Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const rawDate = row.getValue("dueDate")
+
+      if (!rawDate) return <span></span>
+
+      const date = parseISO(rawDate as string)
+
+      let label = ""
+
+      if (isNaN(date.getTime())) {
+        label = ""
+      } else if (isToday(date)) label = "Today"
+      else if (isTomorrow(date)) label = "Tomorrow"
+      else if (isYesterday(date)) label = "Yesterday"
+      else label = formatDistanceToNow(date, { addSuffix: true })
+
+      return <span>{label}</span>
+    }
   },
   {
     accessorKey: "category",
@@ -55,43 +84,43 @@ export const columns= ({
     cell: ({ row }) => {
       const prio = row.getValue("priority") as 1 | 2 | 3
       const prioMap: Record<1 | 2 | 3, { label: string; icon: JSX.Element }> = {
-      1: {
-        label: "High",
-        icon: (
-        <span className="mr-2 text-red-600">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
-          </svg>
-        </span>
-        ),
-      },
-      2: {
-        label: "Medium",
-        icon: (
-        <span className="mr-2 text-yellow-500">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
-          </svg>
-        </span>
-        ),
-      },
-      3: {
-        label: "Low",
-        icon: (
-        <span className="mr-2 text-green-600">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
-          </svg>
-        </span>
-        ),
-      },
+        1: {
+          label: "High",
+          icon: (
+          <span className="mr-2 text-red-600">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
+            </svg>
+          </span>
+          ),
+        },
+        2: {
+          label: "Medium",
+          icon: (
+          <span className="mr-2 text-yellow-500">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
+            </svg>
+          </span>
+          ),
+        },
+        3: {
+          label: "Low",
+          icon: (
+          <span className="mr-2 text-green-600">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M4 10a6 6 0 1112 0A6 6 0 014 10zm2 0a4 4 0 108 0 4 4 0 00-8 0z" />
+            </svg>
+          </span>
+          ),
+        },
       }
       const { label, icon } = prioMap[prio]
       return (
-      <div className="flex items-center">
-        {icon}
-        {label}
-      </div>
+        <div className="flex items-center">
+          {icon}
+          {label}
+        </div>
       )
     },
     },

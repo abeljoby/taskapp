@@ -40,7 +40,7 @@ export default function TaskPage() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-15 px-10">
       <TaskSheet onFormSubmit={fetchData} />
       {showUpdate && editTask && (
         <UpdateTask task={editTask} onFormSubmit={handleUpdateClose} onClose={handleUpdateClose} />
