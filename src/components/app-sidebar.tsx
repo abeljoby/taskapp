@@ -84,7 +84,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        Developed by Abel Joby
+        {/* Developed by Abel Joby */}
       </SidebarFooter>
       {/* <SidebarRail /> */}
     </Sidebar>
