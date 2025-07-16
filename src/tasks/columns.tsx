@@ -123,8 +123,9 @@ export const columns= ({
         </div>
       )
     },
-    },
-    {
+    filterFn: "equals",
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => {
       return (

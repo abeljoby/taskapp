@@ -1,4 +1,4 @@
-import { Calendar, CheckCircle, Clock, Home, Inbox, Loader, Search, Settings, SquareCheckBig } from "lucide-react"
+import { Calendar, CheckCircle, Clock, Home, Inbox, Loader, Search, Settings, SquareCheckBig, Flame, Snowflake, Activity } from "lucide-react"
 
 import {
   Sidebar,
@@ -12,6 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
@@ -61,14 +62,37 @@ const categories = [
   },
 ]
 
+const priorities = [
+  {
+    title: "High",
+    url: "#",
+    icon: Flame,
+    priority: 1,
+  },
+  {
+    title: "Medium",
+    url: "#",
+    icon: Activity,
+    priority: 2,
+  },
+  {
+    title: "Low",
+    url: "#",
+    icon: Snowflake,
+    priority: 3,
+  },
+]
+
 type SidebarProps = {
   selectStatus: (status: string) => void;
   selectCategory: (category: string) => void;
+  selectPriority: (priority: 1 | 2 | 3 | "") => void;
 };
  
 export function AppSidebar({
   selectStatus,
   selectCategory,
+  selectPriority,
 }: SidebarProps) {
   return (
     <Sidebar>
@@ -78,6 +102,7 @@ export function AppSidebar({
           TaskApp
         </span>
       </SidebarHeader>
+      {/* <SidebarSeparator /> */}
       <SidebarContent>
         <SidebarGroup>
           {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
@@ -88,6 +113,28 @@ export function AppSidebar({
                   <SidebarMenuButton asChild onClick={() => {
                     selectCategory("");
                     selectStatus(item.status);
+                    selectPriority("");
+                  }}>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Priority</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {priorities.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild onClick={() => {
+                    selectCategory("");
+                    selectStatus("");
+                    selectPriority(item.priority as 1 | 2 | 3| "");
                   }}>
                     <a href={item.url}>
                       <item.icon />
@@ -108,6 +155,7 @@ export function AppSidebar({
                   <SidebarMenuButton asChild onClick={() => {
                     selectCategory(item.title);
                     selectStatus("");
+                    selectPriority("");
                   }}>
                     <a href={item.url}>
                       {/* <item.icon /> */}

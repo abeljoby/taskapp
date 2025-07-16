@@ -26,13 +26,15 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
   status: string
   category: string
+  priority: 1 | 2 | 3 | ""
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   status,
-  category
+  category,
+  priority,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -47,9 +49,14 @@ export function DataTable<TData, TValue>({
     if (category) {
       filters.push({ id: "category", value: category })
     }
+    if (priority) {
+      filters.push({ id: "priority", value: priority })
+    }
+
+    console.log({priority})
 
     setColumnFilters(filters)
-  }, [status, category])
+  }, [status, category, priority])
 
   const table = useReactTable({
     data,

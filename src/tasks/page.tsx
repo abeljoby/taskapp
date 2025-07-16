@@ -13,9 +13,10 @@ async function getData(): Promise<Task[]> {
 type TaskProps = {
   status: string
   category: string
+  priority: 1 | 2 | 3 | ""
 };
 
-export default function TaskPage({ status, category }: TaskProps) {
+export default function TaskPage({ status, category, priority }: TaskProps) {
   const [data, setData] = useState<Task[]>([])
   const [editTask, setEditTask] = useState<Task | null>(null)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -53,6 +54,7 @@ export default function TaskPage({ status, category }: TaskProps) {
       <DataTable
         status={status}
         category={category}
+        priority={priority}
         columns={getColumns({ onDelete: handleDelete, onUpdate: handleUpdate })}
         data={data}
       />
