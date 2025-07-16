@@ -22,7 +22,7 @@ export default function TaskSheet({ onFormSubmit }: TaskSheetProps) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
     <SheetTrigger
-      className="fixed top-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2 shadow-lg transition-colors duration-200"
+      className="fixed bottom-4 right-4 md:top-4 md:bottom-auto z-50 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-colors duration-200 flex items-center justify-center"
       style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
       aria-label="Add Task"
     >
