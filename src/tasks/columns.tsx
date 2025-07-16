@@ -27,6 +27,9 @@ export const columns= ({
   {
     accessorKey: "title",
     header: "Title",
+    cell: ({ row }) => {
+      return <strong>{row.getValue("title")}</strong>
+    }
   },
   {
     accessorKey: "description",
