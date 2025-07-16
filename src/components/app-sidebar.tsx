@@ -87,7 +87,7 @@ export function AppSidebar({
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild onClick={() => {
                     selectCategory("");
-                    selectStatus(item.status)
+                    selectStatus(item.status);
                   }}>
                     <a href={item.url}>
                       <item.icon />
@@ -105,7 +105,10 @@ export function AppSidebar({
             <SidebarMenu>
               {categories.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild onClick={() => selectCategory(item.title)}>
+                  <SidebarMenuButton asChild onClick={() => {
+                    selectCategory(item.title);
+                    selectStatus("");
+                  }}>
                     <a href={item.url}>
                       {/* <item.icon /> */}
                       <span>{item.title}</span>
